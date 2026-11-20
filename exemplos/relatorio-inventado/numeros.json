@@ -1,0 +1,49 @@
+{
+  "versao": "1.0.0",
+  "arquivos_lidos": 4,
+  "pedidos_seus": 19,
+  "turnos_automaticos": {
+    "claude": 5,
+    "codex": 1
+  },
+  "grupos_repetidos": 5,
+  "pedidos_em_repeticao": 18,
+  "pct_repeticao": 94.7,
+  "pedidos_por_tipo": {
+    "checagem": 5,
+    "atalho": 4,
+    "resposta": 3,
+    "ja-e-atalho": 3,
+    "skill": 3
+  },
+  "grupos_atalho": 1,
+  "grupos_skill": 1,
+  "grupos_ja_atalho": 1,
+  "grupos_resposta": 1,
+  "grupos_link": 0,
+  "grupos_checagem": 1,
+  "maior_grupo": 5,
+  "top10_cobrem_pct": 94.7,
+  "modelo": {
+    "claude-opus-5-5": 15,
+    "claude-fable-5-2": 3,
+    "gpt-6-astra": 1
+  },
+  "esforco": {
+    "claude-opus-5-5|high": 15,
+    "claude-fable-5-2|xhigh": 3,
+    "gpt-6-astra|high": 1
+  },
+  "limites": {
+    "session": 1,
+    "weekly": 1,
+    "codex": 1
+  },
+  "turnos_medidos": {
+    "claude-opus-5-5": 18,
+    "claude-fable-5-2": 3
+  },
+  "turnos_mais_de_10min": {
+    "claude-fable-5-2": 3
+  }
+}

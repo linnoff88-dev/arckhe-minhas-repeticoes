@@ -1,0 +1,5 @@
+# gerado por minhas-repeticoes. Copie para a pasta match do Espanso:
+#   Linux ~/.config/espanso/match/ · Mac ~/Library/Application Support/espanso/match/ · Windows %APPDATA%\espanso\match\
+matches:
+  - trigger: ";portal-publica"
+    replace: "publica no portal"

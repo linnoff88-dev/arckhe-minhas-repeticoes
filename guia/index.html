@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>Minhas repetições — seus pedidos repetidos viram atalho e skill</title>
+<meta content="Kit grátis que lê o seu histórico do Claude Code e do Codex, mostra o que você repete e diz o que vira atalho, o que vira skill e o que é só checagem ou resposta. Local, sem API." name="description"/>
+
+
+
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;800&amp;family=Inter:wght@400;500;600&amp;family=JetBrains+Mono:wght@400;600&amp;display=swap" rel="stylesheet"/>
+<style>
+  :root{
+    --bg:#0c0c10; --bg2:#14141b; --card:#16161e; --line:#272730;
+    --txt:#e9e9ee; --mut:#9a9aa6; --amb:#E2A23B; --amb2:#f0c070; --sky:#38bdf8; --pro:#cbd5e1;
+    color-scheme:dark;
+  }
+  body.light{
+    --bg:#f6f7f9; --bg2:#eceef2; --card:#ffffff; --line:#e1e3ea;
+    --txt:#1a1a22; --mut:#5b5b68; --amb:#b9791d; --amb2:#a16207; --sky:#0369a1; --pro:#b45309;
+    color-scheme:light;
+  }
+  body.light .hero .glow{opacity:.5}
+  body.light pre{background:#0e0e14;color:#d6d6e0}
+  body.light pre .c{color:#8a8a98}
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:var(--bg);color:var(--txt);font:16px/1.65 Inter,system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+  h1,h2,h3{font-family:Sora,sans-serif;line-height:1.15;margin:0}
+  a{color:var(--amb);text-decoration:none}
+  code,pre{font-family:"JetBrains Mono",monospace}
+  .wrap{max-width:1160px;margin:0 auto;padding:0 22px}
+  .mut{color:var(--mut)} .amb{color:var(--amb)}
+  .chip{display:inline-block;font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--amb);font-weight:600;font-family:Sora}
+  nav{position:sticky;top:0;z-index:30;backdrop-filter:blur(12px);background:rgba(12,12,16,.78);border-bottom:1px solid var(--line)}
+  nav .wrap{display:flex;align-items:center;gap:22px;height:60px}
+  nav .brand{display:flex;align-items:center;gap:8px;font-family:Sora;font-weight:800;letter-spacing:-.02em;color:var(--amb)}
+  nav .brand .emoji{font-size:1.25rem}
+  nav .sep{color:var(--mut);opacity:.45}
+  nav .inema{color:var(--sky);font-weight:600;font-size:.88rem;font-family:Sora}
+  nav .inema:hover{filter:brightness(1.15)}
+  nav .pro{color:var(--pro);font-weight:600;font-size:.88rem;font-family:Sora}
+  nav .pro:hover{filter:brightness(1.15)}
+  nav .clubpro{display:inline-flex;align-items:center;gap:6px}
+  nav .links{margin-left:auto;display:flex;align-items:center;gap:20px;font-size:.92rem}
+  nav .links a.sec{color:var(--mut)} nav .links a.sec:hover{color:var(--txt)}
+  .lang{display:inline-flex;gap:2px;font-family:Sora;font-size:.78rem}
+  .lang a{color:var(--mut);padding:.2em .45em;border-radius:6px} .lang a.on{color:var(--amb);background:rgba(226,162,59,.12)}
+  .tgl{background:var(--bg2);border:1px solid var(--line);color:var(--txt);width:38px;height:38px;border-radius:10px;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;font-size:1.05rem}
+  .tgl:hover{border-color:var(--amb)}
+  .btn{display:inline-block;background:var(--amb);color:#1a1206;font-weight:600;padding:.6em 1.05em;border-radius:10px;font-family:Sora}
+  .btn.ghost{background:transparent;color:var(--txt);border:1px solid var(--line)}
+  @media(max-width:760px){nav .links a.sec{display:none}}
+  @media(max-width:520px){nav .wrap{gap:8px;padding:8px 14px;height:auto;flex-wrap:wrap} nav .links{gap:8px;margin-left:0;width:100%;justify-content:space-between} nav .btn{padding:.45em .7em;font-size:.82rem} .tgl{width:34px;height:34px}}
+  .hero{position:relative;overflow:hidden;border-bottom:1px solid var(--line)}
+  .hero .glow{position:absolute;inset:-40% -20% auto auto;width:70%;height:600px;background:radial-gradient(closest-side,rgba(226,162,59,.22),transparent 70%);pointer-events:none}
+  .hero .wrap{display:grid;grid-template-columns:1.1fr .9fr;gap:40px;align-items:center;padding:74px 22px}
+  .hero h1{font-size:clamp(2.2rem,5vw,3.5rem);font-weight:800;letter-spacing:-.025em}
+  .hero p.lead{font-size:1.18rem;color:var(--mut);margin:1.1em 0 1.6em;max-width:34ch}
+  .hero .cta{display:flex;gap:12px;flex-wrap:wrap}
+  .hero figure{margin:0;border-radius:16px;overflow:hidden;border:1px solid var(--line);box-shadow:0 30px 80px -30px #000}
+  .hero figure img{width:100%;height:auto;display:block}
+  .resumo{padding:38px 0 34px;border-bottom:1px solid var(--line)}
+  .resumo p{font-size:1.12rem;line-height:1.7;max-width:74ch;margin:.55em 0 0}
+  @media(max-width:780px){.hero .wrap{grid-template-columns:1fr;padding:48px 22px}}
+  section{padding:62px 0;border-bottom:1px solid var(--line)}
+  section h2{font-size:clamp(1.5rem,3.4vw,2.1rem);font-weight:800;letter-spacing:-.02em}
+  section .sub{color:var(--mut);margin:.6em 0 2em;max-width:62ch}
+  .grid{display:grid;gap:16px}
+  .g3{grid-template-columns:repeat(3,1fr)} .g4{grid-template-columns:repeat(4,1fr)} .g2{grid-template-columns:repeat(2,1fr)}
+  @media(max-width:820px){.g3,.g4{grid-template-columns:1fr 1fr}}
+  @media(max-width:540px){.g2,.g3,.g4{grid-template-columns:1fr}}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:20px}
+  .card h3{font-size:1.05rem;margin-bottom:.4em}
+  .card p{color:var(--mut);font-size:.92rem;margin:0}
+  .num{display:inline-flex;width:30px;height:30px;align-items:center;justify-content:center;border-radius:8px;background:rgba(226,162,59,.14);color:var(--amb);font-family:Sora;font-weight:800;font-size:.9rem;margin-bottom:.7em}
+  .flow{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-top:10px}
+  .flow span{background:var(--bg2);border:1px solid var(--line);border-radius:999px;padding:.45em .9em;font-size:.85rem;font-family:Sora;font-weight:600}
+  .flow .arr{color:var(--amb);border:none;background:none;padding:0 .1em}
+  pre{background:#0a0a0e;border:1px solid var(--line);border-radius:12px;padding:16px 18px;overflow:auto;font-size:.86rem;line-height:1.6;color:#d6d6e0}
+  pre .c{color:#6f6f7c} pre .k{color:var(--amb2)} pre .s{color:#9ece6a}
+  .step{display:grid;grid-template-columns:46px minmax(0,1fr);gap:16px;margin-bottom:26px}
+  .step>div,.card{min-width:0}
+  p code,li code,td code{overflow-wrap:anywhere}
+  .step .b{width:46px;height:46px;border-radius:12px;background:var(--amb);color:#1a1206;font-family:Sora;font-weight:800;font-size:1.25rem;display:flex;align-items:center;justify-content:center}
+  .step h3{font-size:1.12rem;margin-bottom:.3em}
+  .step p{color:var(--mut);margin:.2em 0 .7em}
+  .ex{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+  @media(max-width:680px){.ex{grid-template-columns:1fr}}
+  .ex figure{margin:0;border-radius:14px;overflow:hidden;border:1px solid var(--line)}
+  .ex figure img{width:100%;height:auto;display:block}
+  .ex figcaption{padding:12px 14px;font-size:.88rem;color:var(--mut);background:var(--card)}
+  .phase{display:flex;gap:14px;padding:16px 0;border-bottom:1px solid var(--line)}
+  .phase:last-child{border:none}
+  .phase .tag{flex:0 0 92px;font-family:Sora;font-weight:800;color:var(--amb)}
+  .phase .d strong{display:block;margin-bottom:.2em}
+  .phase .d span{color:var(--mut);font-size:.92rem}
+  footer{padding:46px 0;text-align:center;color:var(--mut);font-size:.9rem}
+  .pill{display:inline-block;border:1px solid var(--line);border-radius:999px;padding:.3em .8em;font-size:.78rem;color:var(--mut);margin:0 4px}
+  .techhead{background:var(--bg2);border-top:3px solid var(--amb);padding:58px 0 8px}
+  .techhead h2{font-family:Sora;margin:.3em 0 0}
+  .techzone{background:var(--bg2)}
+  .card h3.big{font-family:Sora;font-size:2rem;color:var(--amb);margin:.1em 0 .2em}
+  .bars .b{display:grid;grid-template-columns:minmax(110px,30%) 1fr 64px;gap:10px;align-items:center;margin:8px 0}
+  .bars .r{color:var(--mut);font-size:.92rem}
+  .bars .t{background:var(--line);border-radius:6px;height:14px;overflow:hidden}
+  .bars .t i{display:block;height:100%;min-width:3px;background:var(--amb)}
+  .bars b{font-family:Sora}
+</style>
+<link href="https://inematds.github.io/minhas-repeticoes/guia/" hreflang="pt-BR" rel="alternate"/><link href="https://inematds.github.io/minhas-repeticoes/guia/en/" hreflang="en" rel="alternate"/><link href="https://inematds.github.io/minhas-repeticoes/guia/es/" hreflang="es" rel="alternate"/></head>
+<body>
+<nav><div class="wrap">
+<a class="brand" href="#top"><span class="emoji">🔁</span> Minhas repetições</a>
+<span class="sep">|</span>
+<span class="clubpro">
+<a class="inema" href="https://inema.club" rel="noopener" target="_blank">INEMA.CLUB</a>
+<span class="sep">-</span>
+<a class="pro" href="https://inema.pro" rel="noopener" target="_blank">PRO</a>
+</span>
+<div class="links">
+<a class="sec" href="#video">Vídeo</a>
+<a class="sec" href="#numeros">O que apareceu</a>
+<a class="sec" href="#decide">Atalho ou skill</a>
+<a class="sec" href="#dicas">Dicas</a>
+<a class="sec" href="#tecnico">Kit (técnico)</a>
+<span class="lang"><a class="on" href="./">PT</a><a href="en/">EN</a><a href="es/">ES</a></span>
+<button aria-label="Alternar tema" class="tgl" id="themeToggle" title="Alternar tema">🌙</button>
+<a class="btn" href="https://github.com/inematds/minhas-repeticoes" rel="noopener" target="_blank">GitHub</a>
+</div>
+</div></nav>
+<header class="hero" id="top">
+<div class="glow"></div>
+<div class="wrap">
+<div>
+<span class="chip">Kit grátis · roda na sua máquina</span>
+<h1>Você digita a mesma coisa toda semana. <span class="amb">Minhas repetições</span> mostra o quê.</h1>
+<p class="lead">Cada pedido repetido parece o primeiro, por isso você não percebe, e paga de novo em tempo e em limite de uso. Descubra o que vira atalho, o que vira skill (um passo a passo que a IA segue sozinha) e o que nem devia precisar ser pedido.</p>
+<div class="cta">
+<a class="btn" href="#video">Entender em 3 minutos</a>
+<a class="btn ghost" href="https://github.com/inematds/minhas-repeticoes" rel="noopener" target="_blank">Ver no GitHub</a>
+</div>
+</div>
+<figure><img alt="Banner: você se repete — seus pedidos repetidos viram atalho e skill" src="assets/banner.jpg"/></figure>
+</div>
+</header>
+<section class="resumo" id="resumo"><div class="wrap">
+<span class="chip">Em resumo</span>
+<p>Quem trabalha com agentes de IA pede as mesmas coisas muitas vezes e não percebe, porque cada vez parece a primeira. Minhas repetições é um kit gratuito que lê o histórico do Claude Code e do Codex guardado no seu computador e mostra o que você mais repete. Para cada repetição ele diz se vale virar um atalho (um texto curto que você cola com um gatilho), uma skill (um procedimento com passos que o agente segue) ou se é só uma resposta como "sim". Para usar basta ter Python 3: não chama API e nada sai da sua máquina.</p>
+<figure style="margin:26px 0 0;border-radius:16px;overflow:hidden;border:1px solid var(--line);box-shadow:0 30px 80px -30px #000"><img alt="O kit lê o histórico, acha o repetido, gera atalho e rascunho de skill, mede modelo, esforço, limites e turnos longos" loading="lazy" src="assets/banner-grade.jpg" style="width:100%;display:block"/></figure>
+</div></section>
+<section id="video"><div class="wrap">
+<span class="chip">Vídeo</span>
+<h2>Entenda em 3 minutos</h2>
+<div style="aspect-ratio:16/9;border-radius:14px;overflow:hidden;border:1px solid var(--line)"><iframe referrerpolicy="strict-origin-when-cross-origin" src="https://www.youtube-nocookie.com/embed/3aanGE9Jpz8" title="Vídeo: Minhas repetições" style="width:100%;height:100%;border:0" allow="accelerometer; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe></div>
+<p class="mut" style="margin-top:12px"><a href="https://www.youtube.com/watch?v=3aanGE9Jpz8" target="_blank" rel="noopener">▶ Assistir no YouTube</a> · <a href="https://youtube.com/shorts/cEHKKEnX4GU" target="_blank" rel="noopener">Versão vertical (celular)</a></p>
+</div></section>
+<section id="numeros"><div class="wrap">
+<span class="chip">O que apareceu numa máquina real</span>
+<h2>30 dias de trabalho com agentes, <span class="amb">contados</span></h2>
+<p class="sub">Rodamos o kit numa máquina de produção do INEMA, onde agentes de IA fazem vídeos, guias e publicações todo dia (30 dias até 15/11/2026). Só contagens: nenhum texto sai do computador. "Turno" é cada vez que a IA trabalha numa rodada.</p>
+<div class="grid g4">
+<div class="card"><h3 class="big">2.287</h3><p>pedidos digitados por uma pessoa no mês</p></div>
+<div class="card"><h3 class="big">12,6%</h3><p>deles eram repetição (o mesmo pedido 3 vezes ou mais)</p></div>
+<div class="card"><h3 class="big">68×</h3><p>"qual a situação": o campeão. Somando "o que está rodando" e parecidos, 80 checagens</p></div>
+<div class="card"><h3 class="big">13.505</h3><p>turnos feitos por robôs (agentes que rodam sozinhos, sem ninguém digitando): quase 6 para cada pedido digitado</p></div>
+</div>
+<h3 style="margin:34px 0 10px">Para qual modelo de IA foram os pedidos digitados</h3>
+<p class="sub" style="margin:0 0 10px">Opus 5.5 e Fable 5.2 são dois modelos do Claude: o Opus é o mais rápido, o Fable é o maior (pensa mais, gasta mais). O Codex é o agente da OpenAI.</p>
+<div class="bars">
+<div class="b"><span class="r">Opus 5.5</span><span class="t"><i style="width:96.2%"></i></span><b>96,2%</b></div>
+<div class="b"><span class="r">Fable 5.2</span><span class="t"><i style="width:2.4%"></i></span><b>2,4%</b></div>
+<div class="b"><span class="r">Codex (gpt-6-astra)</span><span class="t"><i style="width:0.8%"></i></span><b>0,8%</b></div>
+</div>
+<p class="sub" style="margin-top:14px">O "esforço" (quanto o modelo pensa antes de agir) ficou no nível médio em quase todos os pedidos que registram o esforço. A assinatura chegou ao limite de uso 6 vezes no Claude e 10 vezes no Codex. 10% das rodadas do Opus 5.5 passaram de 10 minutos.</p>
+</div></section>
+<section id="decide"><div class="wrap">
+<span class="chip">Atalho, skill ou resposta</span>
+<h2>Nem toda repetição pede <span class="amb">a mesma solução</span></h2>
+<p class="sub">O kit separa cada grupo de pedidos repetidos nestes quatro tipos (mais dois de apoio: link colado e comando que você já usa). A diferença está no tamanho, nos passos e no que o pedido quer (<a href="#guia">como usar ↓</a>).</p>
+<div class="grid g4">
+<div class="card"><h3>⌨️ Atalho</h3><p>Pedido curto e sempre igual, como "publique no portal". Você digita um gatilho curto (o kit sugere <strong>;portal-publica</strong>) e o texto aparece. O kit já entrega a lista pronta.</p></div>
+<div class="card"><h3>🧩 Skill</h3><p>Pedido longo, com passos ("crie o repo, rode os testes, faça o guia, publique"). Vira um procedimento que o agente segue sempre igual. O kit entrega o rascunho.</p></div>
+<div class="card"><h3>💬 Resposta</h3><p>"sim", "continue", "pode fazer". Não vale atalho. Se aparece demais, o agente está perguntando demais.</p></div>
+<div class="card"><h3>📟 Checagem</h3><p>"qual a situação?" repetido 68 vezes não pede atalho: pede um aviso no fim, uma barra de status ou um painel. O kit marca esses grupos e não gera atalho para eles.</p></div>
+</div>
+</div></section>
+<section id="dicas"><div class="wrap">
+<span class="chip">Dicas</span>
+<h2>O que fazer com o que <span class="amb">você repete</span></h2>
+<p class="sub">As 12 dicas completas estão no kit (DICAS.md). As que mais mudam o dia a dia:</p>
+<div class="grid g3">
+<div class="card"><span class="num">1</span><h3>Pensar no grande, executar no rápido</h3><p>Abra com o modelo maior (no Claude, o Fable) quando ainda não sabe o caminho. Plano claro, troque para o mais rápido (o Opus) e execute.</p></div>
+<div class="card"><span class="num">2</span><h3>Baixe o esforço, não escreva "não pense demais"</h3><p>Se o modelo pensa demais para a tarefa, quem resolve é o nível de esforço (uma configuração de quanto ele pensa), não uma frase no pedido.</p></div>
+<div class="card"><span class="num">3</span><h3>Quem escreveu não revisa</h3><p>Mudança média ou grande vai para outro agente revisar, de preferência de outra empresa (o Codex revisando o que o Claude fez, por exemplo).</p></div>
+<div class="card"><span class="num">4</span><h3>Rotina vira vigia barato</h3><p>Um script confere primeiro; a IA só entra quando ele acha um problema. Rodada sem problema não gasta nada.</p></div>
+<div class="card"><span class="num">5</span><h3>Tarefa longa avisa no fim</h3><p>Critério de pronto escrito e "Terminei: …" no final tiram o "qual a situação?" do seu dia.</p></div>
+<div class="card"><span class="num">6</span><h3>Meça de novo em 30 dias</h3><p>O número que importa é a sua repetição caindo depois dos atalhos e das skills.</p></div>
+</div>
+</div></section>
+<div class="techhead" id="tecnico"><div class="wrap">
+<span class="chip">Parte técnica</span>
+<h2>O kit: <span class="amb">para quem quer medir o próprio histórico</span></h2>
+<p class="sub">Daqui para baixo é a parte técnica: instalar, rodar e ler o relatório. Você <strong>não precisa</strong> desta parte para entender o que está acima.</p>
+</div></div>
+<div class="techzone">
+<section id="oque"><div class="wrap">
+<span class="chip">O que é</span>
+<h2>Um arquivo, sem dependências</h2>
+<p class="sub"><code>repeticoes.py</code> lê os logs que o Claude Code e o Codex já guardam no seu computador e escreve um relatório.</p>
+<div class="grid g3">
+<div class="card"><h3>🔒 Só local</h3><p>Biblioteca padrão do Python. Não chama API, não instala nada, não manda nada para fora.</p></div>
+<div class="card"><h3>🧑 Só o que você digitou</h3><p>Robôs, vigias, notificações e subagentes ficam fora da conta (e aparecem à parte). Sessão retomada não conta duas vezes.</p></div>
+<div class="card"><h3>✍️ Aceita erro de digitação</h3><p>"qual sistuacao" e "qual a situação?" caem no mesmo grupo; "publica", "publique" e "publicou" também.</p></div>
+</div>
+</div></section>
+<section id="fluxo"><div class="wrap">
+<span class="chip">Como funciona</span>
+<h2>Do log ao atalho</h2>
+<p class="sub">Cada etapa roda em segundos; 11 mil sessões levaram cerca de 1 minuto.</p>
+<div class="flow">
+<span>Lê ~/.claude/projects e ~/.codex/sessions</span><span class="arr">→</span>
+<span>Separa você dos robôs</span><span class="arr">→</span>
+<span>Junta pedidos parecidos</span><span class="arr">→</span>
+<span>Classifica: atalho · skill · checagem · resposta (+ link, comando)</span><span class="arr">→</span>
+<span>Mede modelo, esforço, limite, turno longo</span><span class="arr">→</span>
+<span>relatorio.html + atalhos + rascunhos de skill</span>
+</div>
+</div></section>
+<section id="pre"><div class="wrap">
+<span class="chip">Pré-requisitos</span>
+<h2>O que precisa</h2>
+<p class="sub">Nada além disto.</p>
+<div class="grid g3">
+<div class="card"><h3>Python 3.9+</h3><p>Já vem no Linux. No Mac pode pedir as ferramentas de linha de comando; no Windows use <code>py</code> no lugar de <code>python3</code>.</p><pre><span class="k">python3</span> --version</pre></div>
+<div class="card"><h3>Histórico do Claude Code ou do Codex</h3><p>Fica em <code>~/.claude/projects</code> e <code>~/.codex/sessions</code>. Basta ter usado.</p><pre><span class="k">ls</span> ~/.claude/projects | head</pre></div>
+<div class="card"><h3>Espanso (opcional)</h3><p>Expansor de texto livre para usar os atalhos gerados. Serve qualquer outro.</p><pre><span class="c"># espanso.org</span></pre></div>
+</div>
+</div></section>
+<section id="guia"><div class="wrap">
+<span class="chip">Guia de uso · passo a passo</span>
+<h2>Do zero ao seu relatório</h2>
+<p class="sub">Comandos reais do kit.</p>
+<div class="step"><div class="b">1</div><div>
+<h3>Baixe o kit</h3>
+<p>Um repositório público, um arquivo principal.</p>
+<pre><span class="k">git clone</span> <span class="s">https://github.com/inematds/minhas-repeticoes</span>
+<span class="k">cd</span> minhas-repeticoes</pre>
+</div></div>
+<div class="step"><div class="b">2</div><div>
+<h3>Confira que roda</h3>
+<p>15 testes com um histórico inventado (nenhum dado seu).</p>
+<pre><span class="k">python3 -m unittest discover -s testes</span>   <span class="c"># Ran 15 tests ... OK</span></pre>
+</div></div>
+<div class="step"><div class="b">3</div><div>
+<h3>Leia o seu histórico</h3>
+<p>Padrão: últimos 30 dias, pastas padrão do Claude Code e do Codex.</p>
+<pre><span class="k">python3 repeticoes.py</span>
+<span class="c"># 2287 pedidos seus · 12.6% em repetição · 6 atalhos · 3 skills · 73s → relatorio/relatorio.html</span>
+<span class="k">python3 repeticoes.py</span> --dias 7 --saida semana   <span class="c"># outra janela</span>
+<span class="k">python3 repeticoes.py</span> --sem-codex               <span class="c"># só Claude Code</span></pre>
+</div></div>
+<div class="step"><div class="b">4</div><div>
+<h3>Abra o relatório</h3>
+<p>Gráficos de repetição, grupos, modelo, esforço, limite e turnos longos. Abre no navegador, sem internet.</p>
+<pre><span class="k">xdg-open</span> relatorio/relatorio.html   <span class="c"># no Mac: open</span></pre>
+</div></div>
+<div class="step"><div class="b">5</div><div>
+<h3>Ligue os atalhos</h3>
+<p>Cada pedido curto repetido vira um gatilho (checagens ficam de fora). Revise antes de copiar. No Mac a pasta é <code>~/Library/Application Support/espanso/match/</code>.</p>
+<pre><span class="k">cat</span> relatorio/atalhos-espanso.yml
+<span class="k">cp</span> relatorio/atalhos-espanso.yml ~/.config/espanso/match/repeticoes.yml</pre>
+</div></div>
+<div class="step"><div class="b">6</div><div>
+<h3>Transforme em skill o que tem passos</h3>
+<p>Cada rascunho traz 3 exemplos de como você pediu. Escreva os passos, troque o que muda por argumento e mova para as suas skills. Ou instale a skill do kit e peça ao agente para fazer isso com você.</p>
+<pre><span class="k">ls</span> relatorio/skills-rascunho/
+<span class="k">mkdir -p</span> ~/.claude/skills
+<span class="k">cp -r</span> skill/minhas-repeticoes ~/.claude/skills/
+<span class="k">cp</span> repeticoes.py DICAS.md ~/.claude/skills/minhas-repeticoes/   <span class="c"># depois, no agente: "o que eu repito?"</span></pre>
+</div></div>
+<div class="step"><div class="b">7</div><div>
+<h3>Meça de novo em 30 dias</h3>
+<p>Compare os dois <code>numeros.json</code>: é o único arquivo sem nenhum texto seu.</p>
+<pre><span class="k">python3 repeticoes.py</span> --saida relatorio-mes2</pre>
+</div></div>
+</div></section>
+<section id="exemplos"><div class="wrap">
+<span class="chip">Exemplos</span>
+<h2>O que sai</h2>
+<p class="sub">Com o histórico inventado dos testes (<code>exemplos/relatorio-inventado/</code>). O relatório sai em português. Só <code>numeros.json</code> pode ser mostrado a alguém; o resto tem trechos dos seus pedidos.</p>
+<div class="grid g2">
+<div class="card"><h3>relatorio.md</h3><pre>1. <span class="k">5×</span> checagem — qual situacao
+2. <span class="k">4×</span> atalho — publica no portal
+3. <span class="k">3×</span> resposta — sim
+4. <span class="k">3×</span> ja-e-atalho — /prime
+5. <span class="k">3×</span> skill — crie o repo deste conteúdo,
+   escreva o README..., publique no portal</pre></div>
+<div class="card"><h3>atalhos-espanso.yml</h3><pre>matches:
+  - trigger: <span class="s">";portal-publica"</span>
+    replace: <span class="s">"publica no portal"</span></pre></div>
+</div>
+</div></section>
+<section id="roadmap"><div class="wrap">
+<span class="chip">Roadmap</span>
+<h2>Próximos passos</h2>
+<p class="sub">O que existe hoje e o que pode vir.</p>
+<div class="phase"><div class="tag">v1.0</div><div class="d"><strong>Hoje</strong><span>Claude Code + Codex, agrupamento por palavras com erro de digitação, atalho/skill/resposta, modelo, esforço, limite, turnos longos, Espanso.</span></div></div>
+<div class="phase"><div class="tag">depois</div><div class="d"><strong>Comparar meses</strong><span>Ler dois numeros.json e mostrar a queda da repetição.</span></div></div>
+<div class="phase"><div class="tag">depois</div><div class="d"><strong>Por projeto</strong><span>Separar a repetição por pasta, para achar o projeto que mais pede a mesma coisa.</span></div></div>
+</div></section>
+</div>
+<footer>
+<div class="wrap">
+<div class="pill">Python 3</div><div class="pill">sem API</div><div class="pill">Claude Code · Codex</div>
+<p style="margin-top:18px">Minhas repetições · grátis no inema.club, direto na internet ·
+      <a href="https://github.com/inematds/minhas-repeticoes">inematds/minhas-repeticoes</a> ·
+      <a href="https://inema.club">INEMA.CLUB</a></p>
+</div>
+</footer>
+<script>
+  (function(){
+    var KEY='minhas-repeticoes-theme';
+    var b=document.body, t=document.getElementById('themeToggle');
+    try{ if(localStorage.getItem(KEY)==='light'){ b.classList.add('light'); t.textContent='☀️'; } }catch(e){}
+    t.addEventListener('click',function(){
+      var light=b.classList.toggle('light');
+      t.textContent=light?'☀️':'🌙';
+      try{ localStorage.setItem(KEY, light?'light':'dark'); }catch(e){}
+    });
+  })();
+</script>
+</body>
+</html>
