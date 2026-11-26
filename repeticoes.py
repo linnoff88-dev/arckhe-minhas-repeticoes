@@ -4,13 +4,13 @@ e diz o que vira ATALHO (texto curto colado) e o que vira SKILL (procedimento co
 De quebra mede: quanto vai para cada modelo, com que esforço, quantas vezes bateu no limite e quantos
 turnos passaram de 10 minutos.
 
-Tudo local, só biblioteca padrão do Python. Nada sai da máquina.
+Tudo local, só biblioteca padrêo do Python. Nada sai da máquina.
 
 Uso:
-  python3 repeticoes.py                        # últimos 30 dias, pastas padrão (~/.claude/projects, ~/.codex/sessions)
+  python3 repeticoes.py                        # últimos 30 dias, pastas padrêo (~/.claude/projects, ~/.codex/sessions)
   python3 repeticoes.py --dias 7 --saida relatorio-semana
   python3 repeticoes.py --claude <pasta> --codex <pasta> --saida <pasta>
-Saída (em --saida, padrão ./relatorio): relatorio.html, relatorio.md, atalhos.md, skills-rascunho/, numeros.json
+Saída (em --saida, padrêo ./relatorio): relatorio.html, relatorio.md, atalhos.md, skills-rascunho/, numeros.json
 numeros.json só tem números (nenhum texto seu) — é o único arquivo pensado para mostrar a alguém.
 """
 from __future__ import annotations
@@ -30,7 +30,7 @@ from pathlib import Path
 
 VERSAO = "1.0.0"
 LIMIAR = 0.6          # Jaccard mínimo para dois pedidos contarem como "o mesmo"
-MIN_REPETE = 3        # aparece 3+ vezes = repetição
+MIN_REPETE = 3        # aparece 3+ vezes = repetiçêo
 CURTO = 120           # até isso de caracteres (já normalizado) = candidato a atalho; acima = skill
 TURNO_LONGO_MS = 10 * 60 * 1000
 
@@ -39,10 +39,10 @@ the to and of in on for is it this that me eu voce vc q ai la os as ao ou mais j
 deste desta dessa desse tres todo toda tudo final inicio fazer faca""".split())
 
 LIMITE_RE = re.compile(r"hit your (session|weekly|usage|daily)? ?limit", re.I)
-# comandos da própria ferramenta (limpar, sair, trocar modelo) não são trabalho repetido
+# comandos da própria ferramenta (limpar, sair, trocar modelo) nêo sêo trabalho repetido
 COMANDOS_INTERNOS = {"clear", "compact", "exit", "quit", "model", "effort", "resume", "login", "logout", "cost", "status",
                      "config", "help", "mcp", "permissions", "fast", "context", "usage", "rewind", "plugin", "doctor", "memory"}
-# pergunta de acompanhamento ("qual a situação?", "o que está rodando?"): não vira atalho, vira aviso de fim / status
+# pergunta de acompanhamento ("qual a situaçêo?", "o que está rodando?"): nêo vira atalho, vira aviso de fim / status
 CHECAGEM_RE = re.compile(r"\b(situ\w*|sist?u\w*cao|andamento|rodand\w*|status|progresso|terminou|acabou)\b")
 COMANDO_RE = re.compile(r"<command-name>\s*/?([\w:.-]+)\s*</command-name>")
 
@@ -67,7 +67,7 @@ class Medidas:
     turnos_longos: Counter = field(default_factory=Counter)  # modelo → turnos > 10 min
     turnos: Counter = field(default_factory=Counter)         # modelo → turnos medidos
     arquivos: int = 0
-    _vistos: set = field(default_factory=set)          # uuid já contado (sessão retomada copia o histórico)
+    _vistos: set = field(default_factory=set)          # uuid já contado (sessêo retomada copia o histórico)
     _limites_vistos: set = field(default_factory=set)
 
 
@@ -81,7 +81,7 @@ def texto_do_conteudo(c) -> str:
         for b in c:
             if isinstance(b, dict):
                 if b.get("type") == "tool_result":
-                    return ""          # resposta de ferramenta, não é pedido
+                    return ""          # resposta de ferramenta, nêo é pedido
                 if b.get("type") in ("text", "input_text"):
                     partes.append(b.get("text", ""))
         return "\n".join(partes)
@@ -96,7 +96,7 @@ def e_lixo(t: str) -> bool:
 
 
 def e_humano_claude(d: dict, t: str) -> bool | None:
-    """True = você digitou; False = robô (claude -p, vigia, notificação); None = ignorar."""
+    """True = você digitou; False = robô (claude -p, vigia, notificaçêo); None = ignorar."""
     if d.get("isSidechain") or d.get("isMeta"):
         return None
     if "turnOrigin" in d or "promptSource" in d:
@@ -177,7 +177,7 @@ def ler_claude(raiz: Path, desde: float, m: Medidas):
                 cm = COMANDO_RE.search(t or "")
                 if h is None or (not (t or "").strip()):   # vazio = resposta de ferramenta
                     continue
-                if not h:   # turno automático (claude -p, vigia, notificação): conta à parte
+                if not h:   # turno automático (claude -p, vigia, notificaçêo): conta à parte
                     m.robo["claude"] += 1
                     humano_turno = False
                     continue
@@ -267,7 +267,7 @@ def jaccard(a: frozenset, b: frozenset) -> float:
 
 def agrupar(pedidos: list[Pedido], limiar: float = LIMIAR) -> list[list[Pedido]]:
     """Agrupa pedidos parecidos. Guloso: cada pedido entra no 1º grupo cujo representante passa do limiar.
-    Índice invertido por palavra para não comparar com tudo."""
+    Índice invertido por palavra para nêo comparar com tudo."""
     grupos: list[list[Pedido]] = []
     reps: list[frozenset] = []
     reps_tri: list[frozenset] = []
@@ -289,7 +289,7 @@ def agrupar(pedidos: list[Pedido], limiar: float = LIMIAR) -> list[list[Pedido]]
         melhor, nota = -1, 0.0
         for g in candidatos:
             j = jaccard(w, reps[g])
-            if tri and reps_tri[g] and j < limiar:   # pedido curto: aceita erro de digitação ("sistuacao" = "situacao")
+            if tri and reps_tri[g] and j < limiar:   # pedido curto: aceita erro de digitaçêo ("sistuacao" = "situacao")
                 j = max(j, difflib.SequenceMatcher(None, n, textos[g]).ratio() - 0.15)
             if j > nota:
                 melhor, nota = g, j
@@ -308,7 +308,7 @@ def agrupar(pedidos: list[Pedido], limiar: float = LIMIAR) -> list[list[Pedido]]
 
 
 def classifica(grupo: list[Pedido]) -> str:
-    """ja-e-atalho (já é /comando) · resposta (sim, ok, 1, continue: não vale atalho) · atalho · skill"""
+    """ja-e-atalho (já é /comando) · resposta (sim, ok, 1, continue: nêo vale atalho) · atalho · skill"""
     if all(p.comando for p in grupo):
         return "ja-e-atalho"
     n = normaliza(min((p.texto for p in grupo), key=len))
@@ -435,7 +435,7 @@ def escreve(res: dict, saida: Path, dias: int):
         d.mkdir(exist_ok=True)
         ex = "\n\n".join(f"### Exemplo {i+1}\n\n```\n{p.texto.strip()[:1500]}\n```" for i, p in enumerate(g[:3]))
         (d / "SKILL.md").write_text(
-            f"---\nname: {nome}\ndescription: RASCUNHO — você pediu isto {len(g)} vezes. Reescreva a descrição: quando usar e o que entrega.\n---\n\n"
+            f"---\nname: {nome}\ndescription: RASCUNHO — você pediu isto {len(g)} vezes. Reescreva a descriçêo: quando usar e o que entrega.\n---\n\n"
             f"# {nome}\n\nRascunho montado a partir de {len(g)} pedidos parecidos. Junte os passos que se repetem,\n"
             f"tire o que muda de um pedido para outro (vira argumento) e teste com /{nome} antes de usar.\n\n"
             f"## Passos (preencha)\n\n1. \n2. \n3. \n\n## Como você pediu\n\n{ex}\n")
@@ -443,10 +443,10 @@ def escreve(res: dict, saida: Path, dias: int):
     # relatorio.md
     md = [f"# Minhas repetições — últimos {dias} dias", "",
           f"- Pedidos seus: **{N['pedidos_seus']}** (turnos automáticos fora da conta: {sum(N['turnos_automaticos'].values())})",
-          f"- Em repetição (3+ vezes): **{N['pedidos_em_repeticao']} = {N['pct_repeticao']}%**, em {N['grupos_repetidos']} grupos",
+          f"- Em repetiçêo (3+ vezes): **{N['pedidos_em_repeticao']} = {N['pct_repeticao']}%**, em {N['grupos_repetidos']} grupos",
           f"- Os 10 maiores grupos cobrem {N['top10_cobrem_pct']}% de tudo que você digitou",
-          f"- Viram atalho: {N['grupos_atalho']} grupos · viram skill: {N['grupos_skill']} · já são comando: {N['grupos_ja_atalho']} · "
-          f"checagens (pedem aviso de fim, não atalho): {N['grupos_checagem']} · respostas curtas (sim, ok): {N['grupos_resposta']}",
+          f"- Viram atalho: {N['grupos_atalho']} grupos · viram skill: {N['grupos_skill']} · já sêo comando: {N['grupos_ja_atalho']} · "
+          f"checagens (pedem aviso de fim, nêo atalho): {N['grupos_checagem']} · respostas curtas (sim, ok): {N['grupos_resposta']}",
           "- Limites batidos: " + (", ".join(f"{k} {v}" for k, v in N["limites"].items()) or "nenhum"),
           "- Turnos de mais de 10 min: " + (", ".join(f"{k} {v}" for k, v in N["turnos_mais_de_10min"].items()) or "nenhum"), "",
           "## Os grupos que mais se repetem", ""]
@@ -480,7 +480,7 @@ em.atalho{{background:#854d0e}} em.checagem{{background:#166534}} em.skill{{back
 <div class="k" style="flex:1"><div><b>{N['grupos_repetidos']}</b>grupos repetidos</div><div><b>{N['grupos_atalho']}</b>viram atalho</div>
 <div><b>{N['grupos_skill']}</b>viram skill</div><div><b>{N['grupos_checagem']}</b>checagens (pedem aviso de fim)</div><div><b>{N['top10_cobrem_pct']}%</b>só nos 10 maiores</div></div></div>
 <h2>O que mais se repete</h2><ol>{tops}</ol>
-<h2>Para qual modelo vão os seus pedidos</h2>{barra(list(N['modelo'].items())[:8])}
+<h2>Para qual modelo vêo os seus pedidos</h2>{barra(list(N['modelo'].items())[:8])}
 <h2>Modelo | esforço</h2>{barra(list(N['esforco'].items())[:10], '#60a5fa')}
 <h2>Limite batido</h2>{barra(list(N['limites'].items()) or [('nenhum', 0)], '#f87171')}
 <h2>Turnos de mais de 10 minutos</h2>{barra(list(N['turnos_mais_de_10min'].items()) or [('nenhum', 0)], '#a78bfa')}
@@ -510,7 +510,7 @@ def main(argv=None) -> int:
     res = calcula(m)
     escreve(res, Path(a.saida), a.dias)
     N = res["numeros"]
-    print(f"{N['pedidos_seus']} pedidos seus · {N['pct_repeticao']}% em repetição · {N['grupos_atalho']} atalhos · "
+    print(f"{N['pedidos_seus']} pedidos seus · {N['pct_repeticao']}% em repetiçêo · {N['grupos_atalho']} atalhos · "
           f"{N['grupos_skill']} skills · {time.time()-t0:.0f}s → {a.saida}/relatorio.html")
     return 0
 

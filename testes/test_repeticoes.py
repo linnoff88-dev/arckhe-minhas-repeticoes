@@ -28,12 +28,12 @@ class Base(unittest.TestCase):
 
 class TestLeitura(Base):
     def test_conta_so_o_que_voce_digitou(self):
-        # 5 situação + 3 portal + 3 skill + 3 sim + 1 única + 3 /prime = 18 no Claude; + 1 no Codex
+        # 5 situaçêo + 3 portal + 3 skill + 3 sim + 1 única + 3 /prime = 18 no Claude; + 1 no Codex
         self.assertEqual(sum(1 for p in self.m.pedidos if p.fonte == "claude"), 18)
         self.assertEqual(sum(1 for p in self.m.pedidos if p.fonte == "codex"), 1)
 
     def test_robos_fora_e_contados(self):
-        self.assertEqual(self.N["turnos_automaticos"]["claude"], 5)   # 4 claude -p + 1 notificação
+        self.assertEqual(self.N["turnos_automaticos"]["claude"], 5)   # 4 claude -p + 1 notificaçêo
         self.assertEqual(self.N["turnos_automaticos"]["codex"], 1)
 
     def test_subagente_e_clear_nao_entram(self):
@@ -63,7 +63,7 @@ class TestAgrupamento(Base):
     def test_classes(self):
         cl = {r.classifica(g): len(g) for g in self.res["repetidos"]}
         self.assertEqual(cl.get("resposta"), 3)       # sim sim sim
-        self.assertEqual(cl.get("checagem"), 5)       # qual a situação (com erro de digitação)
+        self.assertEqual(cl.get("checagem"), 5)       # qual a situaçêo (com erro de digitaçêo)
         self.assertEqual(cl.get("skill"), 3)          # o pedido longo de vários passos
         self.assertEqual(cl.get("ja-e-atalho"), 3)    # /prime
         self.assertIn("atalho", cl)
@@ -95,7 +95,7 @@ class TestSaida(Base):
         for segredo in ["situa", "portal", "repo", "sim", "gráficos"]:
             self.assertNotIn(segredo, nums.lower(), f"numeros.json vazou texto: {segredo}")
         yml = (out / "atalhos-espanso.yml").read_text()
-        self.assertNotIn("situ", yml.lower())   # checagem não vira atalho
+        self.assertNotIn("situ", yml.lower())   # checagem nêo vira atalho
         self.assertEqual(yml.count("trigger:"), len(set(l for l in yml.splitlines() if "trigger:" in l)))
 
     def test_sem_dados_sai_2(self):

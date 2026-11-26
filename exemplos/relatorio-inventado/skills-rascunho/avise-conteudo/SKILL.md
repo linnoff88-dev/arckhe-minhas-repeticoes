@@ -1,6 +1,6 @@
 ---
 name: avise-conteudo
-description: RASCUNHO — você pediu isto 3 vezes. Reescreva a descrição: quando usar e o que entrega.
+description: RASCUNHO — você pediu isto 3 vezes. Reescreva a descriçêo: quando usar e o que entrega.
 ---
 
 # avise-conteudo

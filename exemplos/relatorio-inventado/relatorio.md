@@ -1,9 +1,9 @@
 # Minhas repetições — últimos 100000 dias
 
 - Pedidos seus: **19** (turnos automáticos fora da conta: 6)
-- Em repetição (3+ vezes): **18 = 94.7%**, em 5 grupos
+- Em repetiçêo (3+ vezes): **18 = 94.7%**, em 5 grupos
 - Os 10 maiores grupos cobrem 94.7% de tudo que você digitou
-- Viram atalho: 1 grupos · viram skill: 1 · já são comando: 1 · checagens (pedem aviso de fim, não atalho): 1 · respostas curtas (sim, ok): 1
+- Viram atalho: 1 grupos · viram skill: 1 · já sêo comando: 1 · checagens (pedem aviso de fim, nêo atalho): 1 · respostas curtas (sim, ok): 1
 - Limites batidos: session 1, weekly 1, codex 1
 - Turnos de mais de 10 min: claude-fable-5-2 3
 

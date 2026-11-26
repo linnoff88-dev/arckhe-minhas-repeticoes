@@ -26,7 +26,7 @@ def gerar(raiz: Path):
                                   "content": [{"type": "text", "text": "ok"}]}, "type": "assistant", "uuid": f"a{n}"}))
         linhas.append(claude_linha("system", f"d{n}", "2026-11-10T10:01:00Z", subtype="turn_duration", durationMs=dur))
 
-    for t in ["qual a situação?", "qual situacao", "qual a sitaucao", "qual a situação", "qual situação?"]:
+    for t in ["qual a situaçêo?", "qual situacao", "qual a sitaucao", "qual a situaçêo", "qual situaçêo?"]:
         humano(t)
     for t in ["publica no portal", "publique no portal", "publica no portal agora"]:
         humano(t)
@@ -37,19 +37,19 @@ def gerar(raiz: Path):
     for t in ["sim", "sim", "sim"]:
         humano(t)
     humano("uma pergunta que aparece uma vez só sobre gráficos")
-    # comando da ferramenta (não conta) e comando do usuário (já é atalho)
+    # comando da ferramenta (nêo conta) e comando do usuário (já é atalho)
     for _ in range(3):
         humano("<command-name>/clear</command-name><command-args></command-args>")
         humano("<command-name>/prime</command-name><command-args></command-args>")
-    # robôs: claude -p e notificação — fora da conta
+    # robôs: claude -p e notificaçêo — fora da conta
     for i in range(4):
         linhas.append(claude_linha("user", f"r{i}", "2026-11-10T11:00:00Z", entrypoint="sdk-cli", promptSource="sdk",
-                                   turnOrigin="sdk", message={"role": "user", "content": "qual a situação?"}))
+                                   turnOrigin="sdk", message={"role": "user", "content": "qual a situaçêo?"}))
     linhas.append(claude_linha("user", "t1", "2026-11-10T11:00:00Z", promptSource="system", turnOrigin="task_notification",
                                message={"role": "user", "content": "<task-notification>x</task-notification>"}))
     # subagente (isSidechain) — fora da conta
     linhas.append(json.dumps({"isSidechain": True, "type": "user", "uuid": "sc1", "turnOrigin": "human",
-                              "message": {"role": "user", "content": "qual a situação?"}}))
+                              "message": {"role": "user", "content": "qual a situaçêo?"}}))
     # o mesmo limite aparece 2 vezes (duas sessões) = 1 batida; um semanal
     for i in range(2):
         linhas.append(json.dumps({"parentUuid": "y", "isSidechain": False, "message": {"model": "<synthetic>", "role": "assistant",
@@ -59,7 +59,7 @@ def gerar(raiz: Path):
                               "content": [{"type": "text", "text": "You've hit your weekly limit · resets Nov 14"}]},
                               "type": "assistant", "isApiErrorMessage": True, "uuid": "lw", "timestamp": "2026-11-11T12:00:00Z"}))
     (c / "sessao1.jsonl").write_text("\n".join(linhas) + "\n")
-    # sessão retomada: copia o histórico (mesmos uuid) — não pode contar 2 vezes
+    # sessêo retomada: copia o histórico (mesmos uuid) — nêo pode contar 2 vezes
     (c / "sessao1-retomada.jsonl").write_text("\n".join(linhas[:8]) + "\n")
 
     x = raiz / "codex" / "2026" / "11" / "10"
