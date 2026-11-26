@@ -1,10 +1,10 @@
 # Minhas repetições
 
-[![Minhas repetições](guia/assets/banner-es.jpg)](https://inematds.github.io/minhas-repeticoes/guia/es/)
+[![Minhas repetições](guia/assets/banner-es.jpg)](https://linnoff88-dev.github.io/arckhe-/guia/es/)
 
 **🇧🇷 [Português](README.md) · 🇺🇸 [English](README.en.md) · 🇪🇸 [Español](README.es.md)**
 
-[![Minhas repetições](guia/assets/banner.jpg)](https://inematds.github.io/minhas-repeticoes/guia/es/)
+[![Minhas repetições](guia/assets/banner.jpg)](https://linnoff88-dev.github.io/arckhe-/guia/es/)
 
 🎬 Video: https://www.youtube.com/watch?v=3aanGE9Jpz8 · Short: https://youtube.com/shorts/cEHKKEnX4GU
 
@@ -17,17 +17,17 @@ Se ejecuta en tu máquina, solo con Python 3 (biblioteca estándar). No llama a 
 
 ## 📖 Guía de uso
 
-Guía completa (landing + paso a paso): **https://inematds.github.io/minhas-repeticoes/guia/es/**
+Guía completa (landing + paso a paso): **https://linnoff88-dev.github.io/arckhe-/guia/es/**
 
 ## Por qué
 
-No te das cuenta de lo que repites porque cada vez parece la primera. En una máquina de producción real, en 30 días: **2.287 solicitudes escritas, 12,6% repetidas**, y la frase más frecuente, «cuál es la situación», apareció **68 veces**. Ese mismo mes, los robots hicieron 13.505 turnos, casi 6 por cada solicitud escrita. Estas cifras están en `exemplos/numeros-maquina-inema-30dias.json`, que solo contiene cantidades, sin ningún texto.
+No te das cuenta de lo que repites porque cada vez parece la primera. En una máquina de producción real, en 30 días: **2.287 solicitudes escritas, 12,6% repetidas**, y la frase más frecuente, «cuál es la situación», apareció **68 veces**. Ese mismo mes, los robots hicieron 13.505 turnos, casi 6 por cada solicitud escrita. Estas cifras están en `exemplos/numeros-maquina-ARCKHÉ-30dias.json`, que solo contiene cantidades, sin ningún texto.
 
 ## El proceso, de principio a fin
 
 | # | Paso | Comando | Quién |
 |---|---|---|---|
-| 1 | Descargar el kit | `git clone https://github.com/inematds/minhas-repeticoes && cd minhas-repeticoes` | 🧠 tú |
+| 1 | Descargar el kit | `git clone https://github.com/linnoff88-dev/minhas-repeticoes && cd minhas-repeticoes` | 🧠 tú |
 | 2 | Comprobar que funciona | `python3 -m unittest discover -s testes` (15 pruebas, datos inventados) | ⚙️ script |
 | 3 | Leer tu historial | `python3 repeticoes.py` (predeterminado: 30 días, `~/.claude/projects` y `~/.codex/sessions`) | ⚙️ script |
 | 4 | Ver el informe | abrir `relatorio/relatorio.html` en el navegador | 🧠 tú |
@@ -66,7 +66,7 @@ Opciones: `--dias 7` · `--saida <pasta>` · `--claude <pasta>` · `--codex <pas
 - `DICAS.md`: 12 consejos sobre qué hacer con lo que repites
 - `skill/minhas-repeticoes/SKILL.md`: skill para que Claude Code ejecute el kit y convierta los grupos en atajos/skills contigo
 - `testes/`: 15 pruebas con historial inventado (`gerar_dados.py`)
-- `exemplos/`: `relatorio-inventado/` (salida con datos inventados) y `numeros-maquina-inema-30dias.json` (números reales, sin texto)
+- `exemplos/`: `relatorio-inventado/` (salida con datos inventados) y `numeros-maquina-ARCKHÉ-30dias.json` (números reales, sin texto)
 
 ## Límites
 
@@ -76,4 +76,4 @@ Opciones: `--dias 7` · `--saida <pasta>` · `--claude <pasta>` · `--codex <pas
 - El esfuerzo solo aparece cuando Claude Code registra la solicitud de API (`?` = sin registro).
 - La agrupación se basa en palabras, no en el significado: «posta no portal» y «publique no portal» pueden quedar separados.
 
-Gratis en [inema.club](https://inema.club), directamente en internet.
+Gratis en [ARCKHÉ AI](https://ARCKHÉ AI), directamente en internet.

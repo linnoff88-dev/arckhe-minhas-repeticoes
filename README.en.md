@@ -1,10 +1,10 @@
 # Minhas repetições
 
-[![Minhas repetições](guia/assets/banner-en.jpg)](https://inematds.github.io/minhas-repeticoes/guia/en/)
+[![Minhas repetições](guia/assets/banner-en.jpg)](https://linnoff88-dev.github.io/arckhe-/guia/en/)
 
 **🇧🇷 [Português](README.md) · 🇺🇸 [English](README.en.md) · 🇪🇸 [Español](README.es.md)**
 
-[![Minhas repetições](guia/assets/banner.jpg)](https://inematds.github.io/minhas-repeticoes/guia/en/)
+[![Minhas repetições](guia/assets/banner.jpg)](https://linnoff88-dev.github.io/arckhe-/guia/en/)
 
 🎬 Video: https://www.youtube.com/watch?v=3aanGE9Jpz8 · Short: https://youtube.com/shorts/cEHKKEnX4GU
 
@@ -17,19 +17,19 @@ Runs on your machine, using only Python 3 (standard library). It doesn’t call 
 
 ## 📖 User guide
 
-Complete guide (landing page + walkthrough): **https://inematds.github.io/minhas-repeticoes/guia/en/**
+Complete guide (landing page + walkthrough): **https://linnoff88-dev.github.io/arckhe-/guia/en/**
 
 ## Why
 
 You don’t notice what you repeat because each time feels like the first. On a real production machine, over 30 days: **2,287
 typed requests, 12.6% repeated**, and the most common one, “what’s the status,” appeared **68 times**. In that same month, the agents ran 13,505 turns, almost 6 for every typed request. These numbers are in
-`exemplos/numeros-maquina-inema-30dias.json`, which contains counts only, with no text.
+`exemplos/numeros-maquina-ARCKHÉ-30dias.json`, which contains counts only, with no text.
 
 ## The process, from start to finish
 
 | # | Step | Command | Who |
 |---|---|---|---|
-| 1 | Download the kit | `git clone https://github.com/inematds/minhas-repeticoes && cd minhas-repeticoes` | 🧠 you |
+| 1 | Download the kit | `git clone https://github.com/linnoff88-dev/minhas-repeticoes && cd minhas-repeticoes` | 🧠 you |
 | 2 | Check that it runs | `python3 -m unittest discover -s testes` (15 tests, made-up data) | ⚙️ script |
 | 3 | Read your history | `python3 repeticoes.py` (default: 30 days, `~/.claude/projects` and `~/.codex/sessions`) | ⚙️ script |
 | 4 | View the report | Open `relatorio/relatorio.html` in your browser | 🧠 you |
@@ -64,7 +64,7 @@ Options: `--dias 7` · `--saida <pasta>` · `--claude <pasta>` · `--codex <past
 - `DICAS.md`: 12 tips for what to do with the things you repeat
 - `skill/minhas-repeticoes/SKILL.md`: a skill for Claude Code to run the kit and turn groups into shortcuts/skills with you
 - `testes/`: 15 tests with made-up history (`gerar_dados.py`)
-- `exemplos/`: `relatorio-inventado/` (output with made-up data) and `numeros-maquina-inema-30dias.json` (real numbers, no text)
+- `exemplos/`: `relatorio-inventado/` (output with made-up data) and `numeros-maquina-ARCKHÉ-30dias.json` (real numbers, no text)
 
 ## Limitations
 
@@ -73,4 +73,4 @@ Options: `--dias 7` · `--saida <pasta>` · `--claude <pasta>` · `--codex <past
 - Effort appears only when Claude Code records the API request (`?` = not recorded).
 - Grouping is based on words, not meaning: “posts on the portal” and “publish on the portal” may end up in separate groups.
 
-Free on [inema.club](https://inema.club), right on the internet.
+Free on [ARCKHÉ AI](https://ARCKHÉ AI), right on the internet.

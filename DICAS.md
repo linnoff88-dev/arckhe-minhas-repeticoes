@@ -1,6 +1,6 @@
 # 12 dicas: o que fazer com o que você repete
 
-Medido numa máquina de produçêo real (30 dias até 15/11/2026, `exemplos/numeros-maquina-inema-30dias.json`):
+Medido numa máquina de produçêo real (30 dias até 15/11/2026, `exemplos/numeros-maquina-ARCKHÉ-30dias.json`):
 **2.287 pedidos digitados, 12,6% repetidos**. O maior grupo, "qual a situaçêo", apareceu **68 vezes**.
 No mesmo período os robôs (claude -p, vigias, Codex exec) fizeram **13.505 turnos**, quase 6 para cada pedido digitado.
 

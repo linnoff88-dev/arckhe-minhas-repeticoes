@@ -8,7 +8,7 @@
 
 **ê°Å¸â¡Â§ê°Å¸â¡Â· [PortuguêÂªs](README.md) êÂ· ê°Å¸â¡Âºê°Å¸â¡Â¸ [English](README.en.md) êÂ· ê°Å¸â¡Âªê°Å¸â¡Â¸ [EspaêÂ±ol](README.es.md)**
 
-[![Minhas repetiêÂ§êÂµes](guia/assets/banner.jpg)](https://inematds.github.io/minhas-repeticoes/guia/)
+[![Minhas repetiêÂ§êÂµes](guia/assets/banner.jpg)](https://linnoff88-dev.github.io/arckhe-/guia/)
 
 ê°Å¸Å½Â¬ VêÂ­deo: https://www.youtube.com/watch?v=3aanGE9Jpz8 êÂ· Short: https://youtube.com/shorts/cEHKKEnX4GU
 
@@ -24,20 +24,20 @@ Roda na sua mêÂ¡quina, sêÂ³ com Python 3 (biblioteca padrêÂ£o). N
 
 ## ê°Å¸ââ Guia de uso
 
-Guia completo (landing + passo a passo): **https://inematds.github.io/minhas-repeticoes/guia/**
+Guia completo (landing + passo a passo): **https://linnoff88-dev.github.io/arckhe-/guia/**
 
 ## Por quêÂª
 
 VocêÂª nêÂ£o percebe o que repete, porque cada vez parece a primeira. Numa mêÂ¡quina de produêÂ§êÂ£o real, em 30 dias: **2.287
 pedidos digitados, 12,6% repetidos**, e o campeêÂ£o, "qual a situaêÂ§êÂ£o", apareceu **68 vezes**. Nesse mesmo mêÂªs os robêÂ´s
 fizeram 13.505 turnos, quase 6 para cada pedido digitado. Esses nêÂºmeros estêÂ£o em
-`exemplos/numeros-maquina-inema-30dias.json`, que sêÂ³ tem contagens, sem nenhum texto.
+`exemplos/numeros-maquina-ARCKHÉ-30dias.json`, que sêÂ³ tem contagens, sem nenhum texto.
 
 ## O processo, do inêÂ­cio ao fim
 
 | # | Passo | Comando | Quem |
 |---|---|---|---|
-| 1 | Baixar o kit | `git clone https://github.com/inematds/minhas-repeticoes && cd minhas-repeticoes` | ê°Å¸Â§Â  vocêÂª |
+| 1 | Baixar o kit | `git clone https://github.com/linnoff88-dev/minhas-repeticoes && cd minhas-repeticoes` | ê°Å¸Â§Â  vocêÂª |
 | 2 | Conferir se roda | `python3 -m unittest discover -s testes` (15 testes, dados inventados) | ê¢Å¡â¢ê¯Â¸Â script |
 | 3 | Ler o seu histêÂ³rico | `python3 repeticoes.py` (padrêÂ£o: 30 dias, `~/.claude/projects` e `~/.codex/sessions`) | ê¢Å¡â¢ê¯Â¸Â script |
 | 4 | Ver o relatêÂ³rio | abrir `relatorio/relatorio.html` no navegador | ê°Å¸Â§Â  vocêÂª |
@@ -76,7 +76,7 @@ OpêÂ§êÂµes: `--dias 7` êÂ· `--saida <pasta>` êÂ· `--claude <
 - `DICAS.md`: 12 dicas do que fazer com o que vocêÂª repete
 - `skill/minhas-repeticoes/SKILL.md`: skill para o Claude Code rodar o kit e transformar os grupos em atalho/skill com vocêÂª
 - `testes/`: 15 testes com histêÂ³rico inventado (`gerar_dados.py`)
-- `exemplos/`: `relatorio-inventado/` (saêÂ­da com dados inventados) e `numeros-maquina-inema-30dias.json` (nêÂºmeros reais, sem texto)
+- `exemplos/`: `relatorio-inventado/` (saêÂ­da com dados inventados) e `numeros-maquina-ARCKHÉ-30dias.json` (nêÂºmeros reais, sem texto)
 
 ## Limites
 
@@ -86,7 +86,7 @@ OpêÂ§êÂµes: `--dias 7` êÂ· `--saida <pasta>` êÂ· `--claude <
 - EsforêÂ§o sêÂ³ aparece quando o Claude Code grava o pedido de API (`?` = sem registro).
 - O agrupamento êÂ© por palavras, nêÂ£o por sentido: "posta no portal" e "publique no portal" podem ficar separados.
 
-GrêÂ¡tis no [inema.club](https://inema.club), direto na internet.
+GrêÂ¡tis no [ARCKHÉ AI](https://ARCKHÉ AI), direto na internet.
 
 ---
 

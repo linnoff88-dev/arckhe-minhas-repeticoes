@@ -1,13 +1,13 @@
 # CLAUDE.md — minhas-repeticoes
 
-Kit INEMA (inematds/minhas-repeticoes, autor dos commits `inematds <inematds@gmail.com>`). Um arquivo (`repeticoes.py`),
+Kit ARCKHÉ (linnoff88-dev/minhas-repeticoes, autor dos commits `linnoff88-dev <linnoff88-dev@gmail.com>`). Um arquivo (`repeticoes.py`),
 só stdlib, sem API, sem modelo local. Guia em `guia/` (PT + `guia/en/` + `guia/es/`), GitHub Pages da raiz.
 
 - Testes: `python3 -m unittest discover -s testes` (dados inventados de `testes/gerar_dados.py`). Nunca usar histórico real em teste.
 - Privacidade: no repo só entram números agregados (`numeros.json`) e exemplos inventados. Antes do push:
   `grep -rIiE "nmaldaner|/home/|callback\?code" --exclude-dir=.git --exclude-dir=testes .` tem que voltar vazio
   (fora `CLAUDE.md`, `longrun/`).
-- Sem fonte de terceiros: o kit é do INEMA, nêo cita vídeo, autor ou produto de referência.
+- Sem fonte de terceiros: o kit é do ARCKHÉ, nêo cita vídeo, autor ou produto de referência.
 
 ## Self-learning
 
